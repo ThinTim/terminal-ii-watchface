@@ -1,0 +1,34 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        "location",
+        "health"
+    ],
+    "companyName": "Tim Erwich",
+    "enableMultiJS": true,
+    "longName": "Terminal II",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "characterRegex": "[ !-~\u00db\u00b0]",
+                "file": "fonts/apple.ttf",
+                "name": "APPLE_16",
+                "targetPlatforms": null,
+                "trackingAdjust": 1,
+                "type": "font"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Terminal II",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
+    "uuid": "731acc15-af1c-46ae-bea6-fab901395498",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
