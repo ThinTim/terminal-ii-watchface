@@ -11,7 +11,7 @@
     "resources": {
         "media": [
             {
-                "characterRegex": "[ !-~\u00db\u00b0]",
+                "characterRegex": "[ !-~]",
                 "file": "fonts/apple.ttf",
                 "name": "APPLE_16",
                 "targetPlatforms": null,
@@ -23,7 +23,6 @@
     "sdkVersion": "3",
     "shortName": "Terminal II",
     "targetPlatforms": [
-        "aplite",
         "basalt"
     ],
     "uuid": "731acc15-af1c-46ae-bea6-fab901395498",

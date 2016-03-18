@@ -33,3 +33,7 @@
 
 # OSX
 .DS_Store
+
+# Pebble
+build/
+.lock-waf_darwin_build
