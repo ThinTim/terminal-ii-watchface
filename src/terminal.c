@@ -2,15 +2,6 @@
 #include "terminal.h"
 #include "util.h"
 
-void reset_terminal_data(TerminalData *data) {
-  strncpy(data->city, "LOCATION UNK", CITY_BUFFER_SIZE);
-  data->temperature = 0;
-  strncpy(data->forecast, "WEATHER UNK", FORECAST_BUFFER_SIZE);
-  data->time = time(NULL);
-  data->battery_level = 100;
-  data->step_count = 5500;
-}
-
 void format_terminal_message(TerminalData *data, TerminalText *text) {
   struct tm *local = localtime(&(data->time));
 
@@ -27,7 +18,7 @@ void format_terminal_message(TerminalData *data, TerminalText *text) {
   make_upper_case(time_string, 20);
 
   const char * format_string = "%s\n" //City
-                               "%d DEGREES\n" //Temperature
+                               "%s\n" //Temperature
                                "%s\n" //Forecast
                                "%s\n" //Date
                                "%s\n" //Day of week
@@ -43,6 +34,4 @@ void format_terminal_message(TerminalData *data, TerminalText *text) {
                                                                    data->battery_level,
                                                                    data->step_count,
                                                                    time_string);
-
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "updated terminal message: %s", text->text_buffer);
 }

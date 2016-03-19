@@ -36,11 +36,21 @@ static void notify_data_changed() {
   type_terminal_message();
 }
 
-static void terminal_layer_update_proc(Layer *layer, GContext *ctx) {
-  strncpy(displayed_text_buffer, s_terminal_text.text_buffer, s_terminal_text.cursor_index);
+static void tick_handler(struct tm *tick_time, TimeUnits time_changed) {
+  s_terminal_data.time = time(NULL);
+  s_terminal_data.step_count = health_service_sum_today(HealthMetricStepCount);
+  s_terminal_data.battery_level = battery_state_service_peek().charge_percent;
+  notify_data_changed();
+}
 
+static void terminal_layer_update_proc(Layer *layer, GContext *ctx) {
   if(strcmp(displayed_text_buffer, s_terminal_text.text_buffer)) {
-    strncat(displayed_text_buffer, CURSOR_SIGN, 1);
+    memset(displayed_text_buffer, 0, sizeof(displayed_text_buffer));
+    strncpy(displayed_text_buffer, s_terminal_text.text_buffer, s_terminal_text.cursor_index);
+
+    if(strcmp(displayed_text_buffer, s_terminal_text.text_buffer)) {
+      strncat(displayed_text_buffer, CURSOR_SIGN, 1);
+    }
   }
 
   graphics_context_set_fill_color(ctx, GColorBlack);
@@ -64,17 +74,14 @@ static void init(void) {
   layer_set_update_proc(s_terminal_layer, terminal_layer_update_proc);
 	layer_add_child(window_layer, s_terminal_layer);
 
-  //TODO: REMOVE - initial state setup
   s_terminal_text.cursor_index = 0;
-  reset_terminal_data(&s_terminal_data);
-  notify_data_changed();
+  tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
 
   //Show the main window
   window_stack_push(s_window, true);
 }
 
 static void deinit(void) {
-  animation_unschedule_all();
   tick_timer_service_unsubscribe();
   fonts_unload_custom_font(s_terminal_font);
   layer_destroy(s_terminal_layer);
