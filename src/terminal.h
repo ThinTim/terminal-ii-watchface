@@ -1,6 +1,7 @@
 #include <pebble.h>
 
 #define CURSOR_SIGN "`"
+#define TYPING_SPEED 80
 #define TERMINAL_BUFFER_SIZE 256
 #define CITY_BUFFER_SIZE 50
 #define TEMPERATURE_BUFFER_SIZE 50

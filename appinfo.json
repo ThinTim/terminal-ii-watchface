@@ -1,5 +1,7 @@
 {
-    "appKeys": {},
+    "appKeys": {
+        "AppKeyJSReady": 1
+    },
     "capabilities": [
         "location",
         "health"

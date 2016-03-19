@@ -25,3 +25,21 @@ char* format_date(char* buffer, unsigned int len, struct tm* time) {
 
   return buffer;
 }
+
+static JsReadyCallback s_js_ready;
+
+static void inbox_received_handler(DictionaryIterator *iter, void *context) {
+  Tuple *ready_tuple = dict_find(iter, AppKeyJSReady);
+  if(ready_tuple) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "JS ready message received");
+    s_js_ready();
+  }
+}
+
+void wait_for_js_ready(JsReadyCallback callback) {
+  s_js_ready = callback;
+
+  app_message_deregister_callbacks();
+  app_message_register_inbox_received(inbox_received_handler);
+  app_message_open(2026, 656);
+}
